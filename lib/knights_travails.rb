@@ -20,4 +20,20 @@ class KnightPathFinder
     @starting_pos = starting_pos
     @visited_positions = [starting_pos]
   end
+
+  def new_move_positions(pos)
+    new_move_positions = self.valid_moves(pos)
+    new_move_positions.reject!{|pos| @visited_positions.include?(pos)}
+
+    @visited_positions += new_move_positions
+    new_move_positions
+  end
+
+  def build_move_tree
+    queue = new_move_positions(@starting_pos)
+    until queue.empty?
+      pos = queue.shift
+      queue += new_move_positions(pos)
+    end
+  end
 end
