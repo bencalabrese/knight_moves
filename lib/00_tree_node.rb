@@ -21,12 +21,10 @@ class PolyTreeNode
 
   def add_child(child_node)
     child_node.parent = self
-    @children << child_node unless children.include?(child_node)
   end
 
   def remove_child(child)
     raise "Not one of your children :(" unless children.include?(child)
-    children.delete(child)
     child.parent = nil
   end
 
@@ -47,9 +45,9 @@ class PolyTreeNode
 
     until queue.empty?
       el = queue.shift
-      queue += el.children
-
       return el if el.value == target_value
+
+      queue += el.children
     end
 
     nil
